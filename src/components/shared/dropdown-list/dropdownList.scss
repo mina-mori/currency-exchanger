@@ -1,0 +1,7 @@
+@import "../../../constants/styleVariables.scss";
+.custom-dropdown {
+    padding: 0.5rem 1rem;
+    option {
+        color: $gray3 !important;
+    }
+}

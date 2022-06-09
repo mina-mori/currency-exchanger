@@ -1,0 +1,44 @@
+@import "../../../constants/styleVariables.scss";
+.converter-panel {
+    padding: 0.5rem;
+    border: 1px solid $gray2;
+    .amount {
+        width: 100%;
+        input {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+    }
+    .currency-value {
+        border: 1px solid $gray1;
+        padding: 0.5rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $gray1;
+        color: $gray3;
+    }
+    .currency-selection {
+        select {
+            width: 100%;
+        }
+        button {
+            background-color: $main-color;
+            color: $white !important;
+            margin: 0 !important;
+        }
+        .row {
+            margin-bottom: 1rem;
+        }
+        .converted-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 1px solid $gray1;
+            background-color: $gray1;
+            color: $gray3;
+        }
+    }
+}
