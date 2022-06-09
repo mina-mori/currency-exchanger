@@ -1,0 +1,11 @@
+@import "../../../constants/styleVariables.scss";
+.card-item {
+    padding: 2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $gray2;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 $gray1;
+}

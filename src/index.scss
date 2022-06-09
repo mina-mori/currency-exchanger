@@ -1,0 +1,25 @@
+@import "./constants/styleVariables.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $gray3 !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+button,
+input,
+select {
+  padding: 0.5rem;
+  background-color: $white;
+  color: $gray3 !important;
+  border: 1px solid $gray2;
+  border-radius: 5px !important;
+  cursor: pointer;
+}
