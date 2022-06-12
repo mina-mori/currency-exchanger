@@ -6,8 +6,10 @@ import { CurrencyService } from '../../../services/currencyService';
 import { useDispatch, useSelector } from 'react-redux';
 import { allCurrenciesSelector, setCurrencies } from '../../../redux/currenciesSlice';
 import { ConverterStickyPanelProps } from '../../../models/converterStickyPanelProps';
+import { useNavigate } from 'react-router-dom';
 const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
     const currencyService = new CurrencyService();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { allCurrencies } = useSelector(allCurrenciesSelector);
     useEffect(() => {
@@ -35,7 +37,6 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
     const [from, setFrom] = useState<string | undefined>(undefined);
     const [to, setTo] = useState<string | undefined>(undefined);
     const [rate, setRate] = useState();
-    const [allRate, setAllRate] = useState();
     const changeAmount = (event: any) => {
         const amount = event.target.value;
         setAmountValue(amount);
@@ -44,6 +45,7 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
             setFrom(undefined);
             setTo(undefined);
             setRate(undefined);
+            props.retrieveAllRates(undefined, undefined);
         }
         else {
             resetSelection(false)
@@ -70,7 +72,7 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
             if (response.success == true) {
                 const rates = response.rates;
                 setRate(rates[`${to_currency}`])
-                setAllRate(rates);
+                props.retrieveAllRates(rates, amountValue);
             }
         });
     }
@@ -104,7 +106,7 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
                         {rate && amountValue && !resetted ? (rate * Number.parseInt(amountValue)) + ' ' + to : ''}
                     </div>
                     {
-                        props.displayDetailsButton ? <div className='d-flex justify-content-center mt-1'><button disabled={amountValue ? false : true}>More Details</button></div> : <></>
+                        props.displayDetailsButton ? <div className='d-flex justify-content-center mt-1'><button onClick={() => navigate(`/details/${from}/${to}`)} disabled={amountValue ? false : true}>More Details</button></div> : <></>
                     }
                 </div>
             </div>
