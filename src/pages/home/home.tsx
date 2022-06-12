@@ -4,15 +4,23 @@ import ConverterStickyPanel from '../../components/featured/converter-sticky-pan
 import Card from '../../components/shared/card/card';
 import './home.scss'
 const Home = () => {
+    const [rates, setRates] = useState<string[]>([]);
+    const retrieveRates = (allRates: string[], amount: number) => {
+        let temp: string[] = [];
+        Object.entries(allRates).map(
+            ([key, value]): any => temp.push(`${Number.parseFloat(value) * amount} ${key}`));
+        setRates([...temp]);
+    }
+
     useEffect(() => {
-        setCurrencies(['Currency 1', 'Currency 2', 'Currency 3', 'Currency 4', 'Currency 5', 'Currency 6', 'Currency 7', 'Currency 8', 'Currency 9'])
-    }, []);
-    const [currencies, setCurrencies] = useState<string[]>([]);
+    }, [rates]);
+
+
     return (
         <>
-            <ConverterStickyPanel displayDetailsButton={true}></ConverterStickyPanel>
+            <ConverterStickyPanel displayDetailsButton={true} retrieveAllRates={retrieveRates}></ConverterStickyPanel>
             <div className='currencies-grid'>
-                {currencies.map((currency: string, index: number) => (
+                {rates.map((currency: string, index: number) => (
                     <div key={index} className='column'>
                         <Card cardBody={currency}></Card>
                     </div>
