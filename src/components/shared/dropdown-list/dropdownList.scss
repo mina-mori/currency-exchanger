@@ -4,4 +4,8 @@
     option {
         color: $gray3 !important;
     }
+    .disabled-option {
+        color: $gray2 !important;
+        cursor: not-allowed !important;
+    }
 }
