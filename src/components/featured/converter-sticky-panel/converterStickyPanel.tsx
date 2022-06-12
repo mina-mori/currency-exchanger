@@ -1,46 +1,110 @@
 import './converterStickyPanel.scss'
 import { useEffect, useState } from 'react';
 import DropdownList from '../../shared/dropdown-list/dropdownList';
-import { Option } from '../../../models/dropdownListProps';
 import exchangeIcon from '../../../exchange-icon.svg';
-const ConverterStickyPanel = (props: any) => {
+import { CurrencyService } from '../../../services/currencyService';
+import { useDispatch, useSelector } from 'react-redux';
+import { allCurrenciesSelector, setCurrencies } from '../../../redux/currenciesSlice';
+import { ConverterStickyPanelProps } from '../../../models/converterStickyPanelProps';
+const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
+    const currencyService = new CurrencyService();
+    const dispatch = useDispatch();
+    const { allCurrencies } = useSelector(allCurrenciesSelector);
     useEffect(() => {
-        setCurrencyOptions([{ label: 'option 1', value: '1' }, { label: 'option 2', value: '2' }]);
+        if (allCurrencies.length == 0) {
+            currencyService.getAllCurrencies().then((response: any) => {
+                if (response.success == true) {
+                    const currencies = Object.keys(response.symbols);
+                    setCurrencyOptions([...currencies]);
+                    dispatch(setCurrencies([currencies]));
+                }
+            });
+        }
     }, []);
-    const [currencyOptions, setCurrencyOptions] = useState<Option[]>([]);
-    const [from, setFrom] = useState();
-    const [to, setTo] = useState();
+    useEffect(() => {
+        if (props.currencyFrom && props.currencyTo) {
+            setFrom(props.currencyFrom);
+            setTo(props.currencyTo);
+            setAmountValue('1');
+            convert(props.currencyFrom, props.currencyTo);
+        }
+    }, [props.currencyFrom, props.currencyTo])
+    const [currencyOptions, setCurrencyOptions] = useState<string[]>([]);
+    const [amountValue, setAmountValue] = useState('');
+    const [resetted, resetSelection] = useState(false);
+    const [from, setFrom] = useState<string | undefined>(undefined);
+    const [to, setTo] = useState<string | undefined>(undefined);
+    const [rate, setRate] = useState();
+    const [allRate, setAllRate] = useState();
+    const changeAmount = (event: any) => {
+        const amount = event.target.value;
+        setAmountValue(amount);
+        if (amount == '') {
+            resetSelection(true)
+            setFrom(undefined);
+            setTo(undefined);
+            setRate(undefined);
+        }
+        else {
+            resetSelection(false)
+        }
+    }
+    const changeFromValue = (event: any) => {
+        setFrom(event.target.value);
+        setRate(undefined);
+    }
+    const changeToValue = (event: any) => {
+        setTo(event.target.value);
+        setRate(undefined);
+    }
+    const swapCurrancies = () => {
+        if (amountValue && from && to) {
+            convert(to, from);
+            const fromOld = from;
+            setFrom(to);
+            setTo(fromOld);
+        }
+    }
+    const convert = (base?: string, to_currency?: string) => {
+        currencyService.getLatest(base ?? 'EUR').then((response: any) => {
+            if (response.success == true) {
+                const rates = response.rates;
+                setRate(rates[`${to_currency}`])
+                setAllRate(rates);
+            }
+        });
+    }
     return (<div className='converter-panel'>
         <div className='row'>
             <div className='col-md-5'>
                 <div className='amount'>
-                    Amount <input type='number'></input>
+                    Amount <input type='number' value={amountValue} onChange={changeAmount}></input>
                 </div>
                 <div className='currency-value'>
-                    1.00 {from} = xxx {to}
+                    {rate && !resetted ? `1.00 ${from} = ${rate} ${to}` : ''}
                 </div>
             </div>
             <div className='col-md-7'>
                 <div className='currency-selection'>
                     <div className='row'>
-                        <div className='col-md-6'>
-                            From <DropdownList options={currencyOptions}></DropdownList>
+                        <div className='col-md-5'>
+                            From <DropdownList onChange={changeFromValue} selectedValue={from} resetSelection={resetted} isDisabled={amountValue ? false : true} options={currencyOptions}></DropdownList>
                         </div>
-                        {/* <div className='col-md-2 d-flex align-items-center justify-content-center'>
-                            <img className='exchange-icon' src={exchangeIcon}></img>
-                        </div> */}
-                        <div className='col-md-6'>
-                            To <DropdownList options={currencyOptions}></DropdownList>
+                        <div className='col-md-2 swap-dev' onClick={swapCurrancies}>
+                            Swap <img className='exchange-icon' src={exchangeIcon}></img>
+                        </div>
+                        <div className='col-md-5'>
+                            To <DropdownList onChange={changeToValue} selectedValue={to} resetSelection={resetted} isDisabled={amountValue ? false : true} options={currencyOptions}></DropdownList>
                         </div>
                     </div>
                     <div className='row'>
-                        <div className='col-md-12'><button className='w-100 mt-2'>Convert</button></div>
+                        <div className='col-md-12'><button disabled={amountValue ? false : true} className='w-100 mt-2' onClick={() => convert(from, to)}>Convert</button></div>
                     </div>
                     <div className='converted-value'>
-                        xxx {to}
+                        {rate && amountValue && !resetted ? (rate * Number.parseInt(amountValue)) + ' ' + to : ''}
                     </div>
                     {
-                        props.displayDetailsButton ? <div className='d-flex justify-content-center mt-1'><button>More Details</button></div> : <></>
+                        props.displayDetailsButton ? <div className='d-flex justify-content-center mt-1'><button disabled={amountValue ? false : true}>More Details</button></div> : <></>
                     }
                 </div>
             </div>

@@ -11,7 +11,7 @@
     }
     .currency-value {
         border: 1px solid $gray1;
-        padding: 0.5rem;
+        padding: 1rem;
         width: 100%;
         display: flex;
         align-items: center;
@@ -39,6 +39,16 @@
             border: 1px solid $gray1;
             background-color: $gray1;
             color: $gray3;
+        }
+        .swap-dev {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            .exchange-icon {
+                width: 2rem;
+            }
         }
     }
 }

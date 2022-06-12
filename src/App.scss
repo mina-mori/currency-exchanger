@@ -5,7 +5,7 @@
         border: 1px solid;
         padding: 1rem;
         margin: 0.5rem;
-        position: fixed;
+        position: sticky;
         top: 0;
         width: -webkit-fill-available;
         display: flex;
@@ -19,8 +19,11 @@
             align-items: center;
             justify-self: center;
         }
-        .exchange-samples button {
-            margin: 0 0.25rem;
+        .exchange-samples {
+            text-align: right;
+            button {
+                margin: 0 0.25rem;
+            }
         }
     }
     .pages {

@@ -1,7 +1,7 @@
 export interface DropdownListProps {
-    options: Option[];
-}
-export interface Option {
-    label: string;
-    value: string;
+    options: string[];
+    isDisabled?: boolean;
+    resetSelection?: boolean;
+    selectedValue?: string;
+    onChange?: any;
 }

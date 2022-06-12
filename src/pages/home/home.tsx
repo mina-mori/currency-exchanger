@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import ConverterStickyPanel from '../../components/featured/converter-sticky-panel/converterStickyPanel';
 import Card from '../../components/shared/card/card';
 import './home.scss'
