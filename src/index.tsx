@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const store = configureStore({ reducer: rootReducer });
 const root = ReactDOM.createRoot(
@@ -16,9 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <Router>
         <App />
-      </BrowserRouter>
+      </Router>
     </Provider>
   </React.StrictMode>
 );

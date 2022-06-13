@@ -4,23 +4,29 @@ import DropdownList from '../../shared/dropdown-list/dropdownList';
 import exchangeIcon from '../../../exchange-icon.svg';
 import { CurrencyService } from '../../../services/currencyService';
 import { useDispatch, useSelector } from 'react-redux';
-import { allCurrenciesSelector, setCurrencies } from '../../../redux/currenciesSlice';
+import { currenciesSelector, setCurrenciesAbbr, setCurrenciesName } from '../../../redux/currenciesSlice';
 import { ConverterStickyPanelProps } from '../../../models/converterStickyPanelProps';
 import { useNavigate } from 'react-router-dom';
 const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
     const currencyService = new CurrencyService();
-    const navigate = useNavigate();
+    const navigation = useNavigate();
     const dispatch = useDispatch();
-    const { allCurrencies } = useSelector(allCurrenciesSelector);
+    const { currenciesAbbr } = useSelector(currenciesSelector);
     useEffect(() => {
-        if (allCurrencies.length == 0) {
-            currencyService.getAllCurrencies().then((response: any) => {
-                if (response.success == true) {
-                    const currencies = Object.keys(response.symbols);
-                    setCurrencyOptions([...currencies]);
-                    dispatch(setCurrencies([currencies]));
-                }
-            });
+        if (currencyOptions.length == 0) {
+            if (currenciesAbbr.length == 0) {
+                currencyService.getAllCurrencies().then((response: any) => {
+                    if (response.success == true) {
+                        const currencies = Object.keys(response.symbols);
+                        setCurrencyOptions([...currencies]);
+                        dispatch(setCurrenciesAbbr([...currencies]));
+                        dispatch(setCurrenciesName(response.symbols))
+                    }
+                });
+            }
+            else {
+                setCurrencyOptions([...currenciesAbbr]);
+            }
         }
     }, []);
     useEffect(() => {
@@ -45,7 +51,8 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
             setFrom(undefined);
             setTo(undefined);
             setRate(undefined);
-            props.retrieveAllRates(undefined, undefined);
+            if (props.retrieveAllRates)
+                props.retrieveAllRates(undefined, undefined);
         }
         else {
             resetSelection(false)
@@ -71,8 +78,9 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
         currencyService.getLatest(base ?? 'EUR').then((response: any) => {
             if (response.success == true) {
                 const rates = response.rates;
-                setRate(rates[`${to_currency}`])
-                props.retrieveAllRates(rates, amountValue);
+                setRate(rates[`${to_currency}`]);
+                if (props.retrieveAllRates)
+                    props.retrieveAllRates(rates, amountValue);
             }
         });
     }
@@ -90,7 +98,7 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
                 <div className='currency-selection'>
                     <div className='row'>
                         <div className='col-md-5'>
-                            From <DropdownList onChange={changeFromValue} selectedValue={from} resetSelection={resetted} isDisabled={amountValue ? false : true} options={currencyOptions}></DropdownList>
+                            From <DropdownList onChange={changeFromValue} selectedValue={from} resetSelection={resetted} isDisabled={props.inDetailsMode || !amountValue ? true : false} options={currencyOptions}></DropdownList>
                         </div>
                         <div className='col-md-2 swap-dev' onClick={swapCurrancies}>
                             Swap <img className='exchange-icon' src={exchangeIcon}></img>
@@ -106,7 +114,7 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
                         {rate && amountValue && !resetted ? (rate * Number.parseInt(amountValue)) + ' ' + to : ''}
                     </div>
                     {
-                        props.displayDetailsButton ? <div className='d-flex justify-content-center mt-1'><button onClick={() => navigate(`/details/${from}/${to}`)} disabled={amountValue ? false : true}>More Details</button></div> : <></>
+                        !props.inDetailsMode ? <div className='d-flex justify-content-center mt-1'><button onClick={() => navigation(`/details/${from}/${to}`, { replace: true })} disabled={amountValue ? false : true}>More Details</button></div> : <></>
                     }
                 </div>
             </div>

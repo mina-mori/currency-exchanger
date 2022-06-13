@@ -1,6 +1,6 @@
 export interface ConverterStickyPanelProps {
     currencyFrom?: string;
     currencyTo?: string;
-    displayDetailsButton?: boolean;
+    inDetailsMode?: boolean;
     retrieveAllRates?: any
 }
