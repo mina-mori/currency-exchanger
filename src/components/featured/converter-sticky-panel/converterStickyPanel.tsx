@@ -51,8 +51,8 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
             setFrom(undefined);
             setTo(undefined);
             setRate(undefined);
-            if (props.retrieveAllRates)
-                props.retrieveAllRates(undefined, undefined);
+            if (props.callback)
+                props.callback(undefined, undefined);
         }
         else {
             resetSelection(false)
@@ -74,13 +74,12 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
             setTo(fromOld);
         }
     }
-    const convert = (base?: string, to_currency?: string) => {
-        currencyService.getLatest(base ?? 'EUR').then((response: any) => {
+    const convert = (from_currency: string, to_currency: string) => {
+        currencyService.convert(from_currency, to_currency, Number.parseFloat(amountValue)).then((response: any) => {
             if (response.success == true) {
-                const rates = response.rates;
-                setRate(rates[`${to_currency}`]);
-                if (props.retrieveAllRates)
-                    props.retrieveAllRates(rates, amountValue);
+                setRate(response.result);
+                if (props.callback)
+                    props.callback(from, amountValue);
             }
         });
     }
@@ -91,7 +90,7 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
                     Amount <input type='number' value={amountValue} onChange={changeAmount}></input>
                 </div>
                 <div className='currency-value'>
-                    {rate && !resetted ? `1.00 ${from} = ${rate} ${to}` : ''}
+                    {rate && !resetted ? `1.00 ${from} = ${(rate / Number.parseInt(amountValue)).toFixed(6)} ${to}` : ''}
                 </div>
             </div>
             <div className='col-md-7'>
@@ -108,10 +107,10 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
                         </div>
                     </div>
                     <div className='row'>
-                        <div className='col-md-12'><button disabled={amountValue ? false : true} className='w-100 mt-2' onClick={() => convert(from, to)}>Convert</button></div>
+                        <div className='col-md-12'><button disabled={amountValue ? false : true} className='w-100 mt-2' onClick={() => { if (from && to) convert(from, to) }}>Convert</button></div>
                     </div>
                     <div className='converted-value'>
-                        {rate && amountValue && !resetted ? (rate * Number.parseInt(amountValue)) + ' ' + to : ''}
+                        {rate && amountValue && !resetted ? rate + ' ' + to : ''}
                     </div>
                     {
                         !props.inDetailsMode ? <div className='d-flex justify-content-center mt-1'><button onClick={() => navigation(`/details/${from}/${to}`, { replace: true })} disabled={amountValue ? false : true}>More Details</button></div> : <></>
