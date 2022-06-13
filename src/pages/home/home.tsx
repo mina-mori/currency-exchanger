@@ -18,7 +18,7 @@ const Home = () => {
 
     return (
         <>
-            <ConverterStickyPanel displayDetailsButton={true} retrieveAllRates={retrieveRates}></ConverterStickyPanel>
+            <ConverterStickyPanel retrieveAllRates={retrieveRates}></ConverterStickyPanel>
             <div className='currencies-grid'>
                 {rates.map((currency: string, index: number) => (
                     <div key={index} className='column'>

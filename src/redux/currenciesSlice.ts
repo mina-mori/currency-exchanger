@@ -1,24 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    allCurrencies: [] as string[],
+    currenciesAbbr: [] as string[],
+    currenciesName: {} as any
 };
 
 export const currenciesSlice = createSlice({
-    name: 'allCurrenciesSlice',
+    name: 'currenciesSlice',
     initialState,
     reducers: {
-        setCurrencies(state, action) {
-            state.allCurrencies = action.payload;
+        setCurrenciesAbbr(state, action) {
+            state.currenciesAbbr = action.payload;
+        },
+        setCurrenciesName(state, action) {
+            state.currenciesName = action.payload;
         },
         resetCurrencies(state) {
-            state.allCurrencies = [];
+            state.currenciesAbbr = [];
+            state.currenciesName = [];
         }
     }
 
 });
 
 
-export const { setCurrencies, resetCurrencies } = currenciesSlice.actions;
-export const allCurrenciesSelector = (state: any) => state.allCurrencies;
+export const { setCurrenciesAbbr, setCurrenciesName, resetCurrencies } = currenciesSlice.actions;
+export const currenciesSelector = (state: any) => state.currencies;
 export default currenciesSlice.reducer;

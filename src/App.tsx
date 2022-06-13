@@ -1,16 +1,16 @@
 import logo from './exchange-logo.svg';
 import './App.scss';
 import Home from './pages/home/home';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Router, Routes, useNavigate } from 'react-router-dom';
 import Details from './pages/home/details/details';
 
 const App = () => {
-  const navigate = useNavigate()
+  const navigation = useNavigate();
   const eurToUsd = () => {
-    navigate('/details/EUR/USD');
+    navigation('/details/EUR/USD');
   }
   const eurToGbp = () => {
-    navigate('/details/EUR/GBP');
+    navigation('/details/EUR/GBP');
   }
   return (
     <div className="App">

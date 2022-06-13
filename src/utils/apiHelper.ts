@@ -1,7 +1,7 @@
+import { SystemVariables } from "../constants/systemVariables";
 
 export class ApiHelper {
     private static _instance: ApiHelper;
-    private apiKey = "Nsz64pejabiOrrMDD35qvKme2ReQYaJI";
     public constructor() {
 
     }
@@ -15,7 +15,7 @@ export class ApiHelper {
 
     public getData = (url: string) => {
         const myHeaders = new Headers();
-        myHeaders.append("apikey", this.apiKey);
+        myHeaders.append("apikey", SystemVariables.apiKey);
 
         const requestOptions: any = {
             method: 'GET',

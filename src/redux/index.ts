@@ -2,7 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import currenciesSlice from "./currenciesSlice";
 
 const rootReducer = combineReducers({
-    allCurrencies: currenciesSlice
+    currencies: currenciesSlice
 });
 
 export default rootReducer;
