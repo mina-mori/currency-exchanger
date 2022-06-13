@@ -2,7 +2,7 @@ import logo from './exchange-logo.svg';
 import './App.scss';
 import Home from './pages/home/home';
 import { Route, Router, Routes, useNavigate } from 'react-router-dom';
-import Details from './pages/home/details/details';
+import Details from './pages/details/details';
 
 const App = () => {
   const navigation = useNavigate();
