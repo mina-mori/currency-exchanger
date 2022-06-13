@@ -51,5 +51,29 @@ export class CurrencyService {
 
         }
     }
+    public async convert(from: string, to: string, amount: number) {
+        try {
+            return {
+                "date": "2018-02-22",
+                "historical": "",
+                "info": {
+                    "rate": 148.972231,
+                    "timestamp": 1519328414
+                },
+                "query": {
+                    "amount": 25,
+                    "from": "GBP",
+                    "to": "JPY"
+                },
+                "result": 3724.305775,
+                "success": true
+            }
+
+            //return this._apiHelper.getData('https://data.fixer.io/api/convert?to=${to}&from=${from}&amount=${amount}');
+        }
+        catch (error: any) {
+
+        }
+    }
 }
 
