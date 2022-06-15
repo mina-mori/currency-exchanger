@@ -45,10 +45,21 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            padding: 0.5rem;
             .exchange-icon {
                 width: 2rem;
+                cursor: pointer;
             }
+            .disabled-exchange-icon {
+                width: 2rem;
+                cursor: not-allowed;
+            }
+        }
+        .details-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
     }
 }

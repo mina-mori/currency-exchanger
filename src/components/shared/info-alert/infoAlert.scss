@@ -1,0 +1,13 @@
+.alert-info {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    .close {
+        display: flex;
+        align-items: center;
+        font-size: x-large;
+        cursor: pointer;
+    }
+}

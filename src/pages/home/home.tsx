@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import ConverterStickyPanel from '../../components/featured/converter-sticky-panel/converterStickyPanel';
 import Matrix from '../../components/featured/matrix/matrix';
-import Card from '../../components/shared/card/card';
 import './home.scss'
 const Home = () => {
     const [base, setBase] = useState<string>();
-    const [amount, setAmount] = useState<number>();
+    const [amount, setAmount] = useState<number>(1);
+    const [hidden, hideMatrix] = useState<boolean>(false);
     const setMatrixProps = (base: string, amount: number) => {
+        hideMatrix(false);
         setBase(base);
         setAmount(amount);
     }
 
     return (
         <>
-            <ConverterStickyPanel callback={setMatrixProps}></ConverterStickyPanel>
-            {base && amount && <Matrix base={base} amount={amount}></Matrix>}
+            <h3 className='mb-3'>Currency Exchanger</h3>
+            <ConverterStickyPanel amount={amount} currencyFrom='EUR' currencyTo='USD' onDataChange={() => { hideMatrix(true) }} onConvert={setMatrixProps}></ConverterStickyPanel>
+            {!hidden && base && amount && <Matrix base={base} amount={amount}></Matrix>}
         </>
     )
 
