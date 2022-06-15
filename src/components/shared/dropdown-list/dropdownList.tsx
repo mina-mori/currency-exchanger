@@ -1,6 +1,6 @@
 import './dropdownList.scss';
 import { DropdownListProps } from '../../../models/dropdownListProps';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 const DropdownList = (props: DropdownListProps) => {
     const dropdownElement = useRef(null);
     useEffect(() => {

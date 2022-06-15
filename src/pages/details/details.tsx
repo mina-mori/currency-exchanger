@@ -7,7 +7,6 @@ import { currenciesSelector, setCurrenciesAbbr, setCurrenciesName } from '../../
 import { CurrencyService } from '../../services/currencyService';
 import { DateHelper } from '../../utils/dateHelper';
 import './details.scss';
-
 const Details = () => {
     const navigation = useNavigate();
     const dispatch = useDispatch();
@@ -38,7 +37,6 @@ const Details = () => {
             });
         }
     }
-
     const getMonthlyHistoricalData = () => {
         const currentDate = new Date();
         const DateFromOneYear = new Date(currentDate.setFullYear(currentDate.getFullYear() - 1));

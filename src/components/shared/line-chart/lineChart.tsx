@@ -3,7 +3,6 @@ import { ChartModel } from '../../../models/chartModel';
 import { Chart, CategoryScale, LinearScale, LineElement, PointElement } from 'chart.js';
 import { useEffect, useState } from 'react';
 import './lineChart.scss';
-
 const LineChart = (props: ChartModel) => {
     const [chartData, setChartData] = useState<any>();
     const option: any = {

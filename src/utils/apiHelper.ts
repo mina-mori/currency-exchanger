@@ -1,9 +1,7 @@
 import { SystemVariables } from "../constants/systemVariables";
-import { of } from 'rxjs'
-import { ajax } from 'rxjs/ajax'
-import { map, mergeMap, switchMap, catchError } from 'rxjs/operators'
+import { of } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 import { fromFetch } from "rxjs/fetch";
-
 export class ApiHelper {
     private static _instance: ApiHelper;
     public static getInstance() {
@@ -21,7 +19,6 @@ export class ApiHelper {
             redirect: 'follow',
             headers: myHeaders
         };
-
         return fromFetch(url, requestOptions).pipe(
             switchMap((response: any) => response.json()),
             catchError(error => of(error))

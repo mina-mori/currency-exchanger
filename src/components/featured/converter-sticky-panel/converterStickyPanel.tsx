@@ -1,4 +1,4 @@
-import './converterStickyPanel.scss'
+import './converterStickyPanel.scss';
 import { useEffect, useState } from 'react';
 import DropdownList from '../../shared/dropdown-list/dropdownList';
 import exchangeIcon from '../../../assets/images/exchange-icon.svg';
@@ -117,11 +117,16 @@ const ConverterStickyPanel = (props: ConverterStickyPanelProps) => {
             }
         });
     }
+    const preventPlusOrMinus = (e: any) => {
+        if (e.code === 'NumpadSubtract' || e.code === 'NumpadAdd') {
+            e.preventDefault();
+        }
+    };
     return (<div className='converter-panel'>
         <div className='row'>
             <div className='col-md-5'>
                 <div className='amount'>
-                    Amount <input type='number' min={1} value={amountValue} onChange={changeAmount}></input>
+                    Amount <input type='number' min={1} value={amountValue} onKeyPress={preventPlusOrMinus} onChange={changeAmount}></input>
                 </div>
                 <div className='currency-value'>
                     {rate && !resetted ? `1.00 ${from} = ${rate} ${to}` : 'No data available'}

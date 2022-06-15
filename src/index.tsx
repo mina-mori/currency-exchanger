@@ -8,7 +8,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-
 const store = configureStore({ reducer: rootReducer });
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
