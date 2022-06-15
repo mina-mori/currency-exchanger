@@ -12,16 +12,6 @@ export class ApiHelper {
         }
         return this._instance;
     }
-    // public getData = (url: string) => {
-    //     const headers = {
-    //         apikey: SystemVariables.apiKey,
-    //     }
-    //     return ajax.get(url, headers)
-    //         .pipe(
-    //             map(response => response),
-    //             catchError(error => of(error))
-    //         )
-    // };
     public getData = (url: string) => {
         const myHeaders = new Headers();
         myHeaders.append("apikey", SystemVariables.apiKey);

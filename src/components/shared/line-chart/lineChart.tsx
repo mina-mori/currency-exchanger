@@ -16,12 +16,8 @@ const LineChart = (props: ChartModel) => {
             datasets: [{
                 label: props.dimension,
                 data: props.measure,
-                //  backgroundColor: this.powerLineBackgroundColor,
                 borderColor: '#5dacaf',
-                //  borderWidth: 1,
                 pointBackgroundColor: '#FFFFFF',
-                //  pointRadius: this.state.pointRadius,
-                //  pointHoverRadius: this.state.pointRadius
             }]
         };
         setChartData(data);
