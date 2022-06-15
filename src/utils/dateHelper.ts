@@ -1,6 +1,5 @@
 export class DateHelper {
     private static _instance: DateHelper;
-
     public static getInstance() {
         if (!this._instance) {
             this._instance = new DateHelper();

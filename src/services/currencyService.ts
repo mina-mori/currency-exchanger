@@ -1,5 +1,4 @@
 import { ApiHelper } from "../utils/apiHelper";
-import { of } from 'rxjs';
 export class CurrencyService {
     public _apiHelper: ApiHelper;
     public constructor() {
