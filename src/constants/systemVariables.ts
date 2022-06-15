@@ -1,3 +1,3 @@
 export class SystemVariables {
-    public static apiKey = "Nsz64pejabiOrrMDD35qvKme2ReQYaJI";
+    public static apiKey = "QceqlAfUrPLlgCGjUd8UdciN1PyyJMko";
 }

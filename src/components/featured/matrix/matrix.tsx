@@ -10,15 +10,15 @@ const Matrix = (props: MatrixProps) => {
     useEffect(() => {
         if (props.base && props.amount)
             getRates(props.base, props.amount);
-    }, []);
+    }, [props.base, props.amount]);
 
     const getRates = (base: string, amount: number) => {
-        currencyService.getLatest(base).then((response: any) => {
-            if (response.success == true) {
+        currencyService.getLatest(base).subscribe((response: any) => {
+            if (response?.success == true) {
                 const rates: string[] = response.rates;
                 let temp: string[] = [];
                 if (rates) {
-                    Object.entries(rates).forEach(
+                    Object.entries(rates).slice(0, 9).forEach(
                         ([key, value]) => temp.push(`${(Number.parseFloat(value) * amount).toFixed(6)} ${key}`));
                     setRates([...temp]);
                 }
